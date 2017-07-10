@@ -1,0 +1,41 @@
+canvas{
+	display:block;
+	margin:50px auto;
+	box-shadow:-2px -2px 2px #efefef, 5px 5px 5px #b9b9b9;
+	background-image:url('../image/timg.jpg');
+}
+#messageDiv{
+	text-align: center;
+	font-size: 16px;
+	color: #9F9494;
+	margin: 0 auto 20px;
+}
+.wrap{
+	text-align: center;
+}
+.button{
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	width: 140px;
+	height: 50px;
+	margin: 0 80px;
+	border-radius:8px; 
+	color: #ffffff;
+	font-size: 18px;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	border-width: 2px;
+}
+#button1{
+	background: #2BF110
+}
+#button2{
+	background: #F01414
+}
+.button:hover {
+	text-decoration: none;
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}

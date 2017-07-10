@@ -1,0 +1,203 @@
+
+body {
+	background-color: #fff;
+	padding: 0;
+	margin: 0;
+	border-width: 0;
+	font: normal 14px "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+}
+header{
+	width: 960px;
+	height: 160px;
+	margin:0 auto;
+	background: url('../image/back1.jpg') no-repeat;
+	background-size: 100% 100%;
+	
+}
+header span{
+	
+	font: bold 16px Georgia, "Times New Roman", Times, serif;
+	font-size: 3em;
+	color: #575C54;
+	float: right;
+	margin-right: 5%;
+	margin-top: 5%;
+	text-shadow: 0 1px hsl(0,0%,85%),
+				0 2px hsl(0,0%,80%),
+				0 3px hsl(0,0%,75%),
+				0 4px hsl(0,0%,70%),
+				0 5px hsl(0,0%,65%),
+				0 6px 10px black;
+}
+#content{
+	width: 960px;
+	margin: 0px auto;
+	padding: 0px 0 50px 0;
+	background: url('../image/back2.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+article{
+	width: 800px;
+	position: relative;
+	margin: 30px auto;
+	padding: 15px;
+	border: 1px solid #ccc;
+	box-shadow: 2px 1px 4px 2px rgba(0,0,0,0.3);
+	transition: all 0.4s;
+}
+/*article:hover{
+	border-top-right-radius: 140px 30px;
+}*/
+article:before, article:after{
+	content:"";
+	background: #fff;
+	border: 1px solid #ccc;
+	position: absolute;
+	box-shadow: 2px 1px 4px 2px rgba(0,0,0,0.3);
+	z-index: -1;
+}
+article:before {
+	height:96%;
+	width:96%;
+	top:-15px;
+	left:15px;
+	
+}
+ 
+article:after {
+	height:96%;
+	width:98%;
+	top:-7px;
+	left:7px;
+	
+}
+.section{
+	margin: 10px 40px;
+}
+.section p{
+	margin-left: 40px;
+}
+.section p img{
+	width: 20px;
+	height: 20px;
+	border: 1px solid #ccc;
+	border-radius: 3px; 
+}
+#table1{
+	width: 400px;
+	list-style: none;
+	margin: 10px 0px;
+	padding: 10px;
+	border: 1px dashed #ccc;
+	border-spacing: 2px;
+}
+.table2{
+	width: 600px;
+	list-style: none;
+	font-size: 15px;
+	border-spacing: 2px;
+}
+#gain1{
+    margin-left: 20px;
+}
+ul li{
+	margin: 5px;
+}
+#blo{
+	margin: 15px 0 0 0;
+
+}
+#blo1{
+	display: inline-block;
+}
+.picture{
+	position: absolute;
+	top: 60px;
+	right:100px;
+	transform: rotate(45deg);
+	overflow: hidden;
+}
+.ones *{
+	vertical-align: middle;
+}
+.picture img{
+	width: 100px;
+	height:100px;
+	max-width: 100%;
+	transform: rotate(-45deg) scale(1.42);
+}
+h3{
+	font: bold 18px Georgia, "Times New Roman", Times, serif;
+    color: #003300;
+    text-shadow: 0 1px -1px black;
+    padding-left: 28px;
+    height: 23px;
+    margin-top: 14px;
+    margin-bottom: -5px;
+}
+p{
+	line-height: 165%;
+}
+#edu{
+	background-image: url(../image/college.jpg);
+    background-repeat: no-repeat;
+}
+#web{
+	background-image: url(../image/web.jpg);
+    background-repeat: no-repeat;
+}
+#skill{
+	background-image: url(../image/skill.jpg);
+    background-repeat: no-repeat;
+}
+#scie{
+	background-image: url(../image/scie.jpg);
+    background-repeat: no-repeat;
+}
+#other{
+	background-image: url(../image/bonsai.gif);
+    background-repeat: no-repeat;
+}
+#reader{
+	width:50px;
+	height:40px;
+	margin-right: 20px;
+	border-radius: 5px;
+	border-style: none;
+	background-image: url(../image/reader.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+#firgame{
+	width:50px;
+	height:40px;
+	margin-right: 20px;
+	border-radius: 5px;
+	border-style: none;
+	background-image: url(../image/firgame.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+h3 span{
+	border-bottom: 1px dotted #000000;
+    padding-bottom: 3px;
+}
+.ones img{
+	width: 15px;
+	height: 15px;
+	margin-right: 15px;
+}
+.ones ul{
+	display: inline-block;
+}
+#rap{
+	margin-left:40px;
+}
+footer{
+	width: 960px;
+	margin:0 auto;
+	background: url('../image/back3.jpg') no-repeat;
+	background-size: 100%;
+	height: 80px;
+}

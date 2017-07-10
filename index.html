@@ -1,10 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0,width=device-width,user-scalable=no" />
+	<title>Document</title>
+	<link rel='stylesheet' href="./css/style.css">
+	<style>
+
+	</style>
 </head>
 <body>
-<p>hello world</p>
+	<div id="wrapper">
+		<header>
+			<span>My Page</span>
+		</header>
+		<div id="content">
+			<article>
+
+				<div class="section">
+					<table id='table1'>
+						<tbody>
+							<tr><td>姓名:</td> <td>赵凡</td></tr>
+							<tr><td>性别:</td> <td>男</td></tr>
+							<tr><td>电话 :</td> <td>15261890967</td></tr>
+							<tr><td>邮箱 : </td><td>1193019699@qq.com</td></tr>
+							<tr><td>地址 : </td><td>江苏省南京市江宁区无线谷A1315</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="picture">
+					<img src="./image/me.jpg">
+				</div>
+				<div class="section">
+					<h3 id='edu'><span>教育经历</span></h3>
+					<ul>
+						<li>
+							<table class='table2'>
+								<tbody>
+									<tr><td>2011.09 --- 2015.06</td> <td>吉林大学</td><td>通信工程（本科)</td></tr>
+								</tbody>
+							</table>
+						</li>
+						<li>
+							<table class='table2'>
+								<tbody>
+									<tr><td>2015.09 ---  至今  </td> <td>东南大学 </td><td>通信与信息系统（研究生)</td></tr>
+								</tbody>
+							</table>
+							<div id="gain1"><img id='blo' src="./image/gain.png" width="20px" height="20px" align="top">
+								<ul id='blo1'>
+									<li>二等奖学金</li>
+									<li>全国研究生数学建模大赛 二等奖</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+					
+					
+				</div>
+				<div class="section">
+					<h3 id='web'><span>web前端实践</span></h3>
+					<p>
+						<button id="reader"></button>	
+						<span>HTML5开发web阅读器</span>
+					</p>
+					<p>
+						<button id="firgame"></button>	
+						<span>五子棋</span>
+					</p>
+				</div>
+				<div class="section">
+					<h3 id="skill"><span>web前端技能点</span></h3>
+					<p>
+						<span class='ones'><img src="./image/html5.jpg"" >
+							<a>熟悉HTML5新特性，掌握HTML5语义化标签，canvas绘图，本地存储；了解WebSockets通信，跨文档消息传输等通信API；了解HTML5多线程。</a>
+						</span>
+					</p>
+					<p>
+						<span class='ones'><img src="./image/css3.jpg" >熟悉CSS3新特性，掌握css常用布局，css3动画等。</span>
+					</p>
+					<p>
+						<span class='ones'><img src="./image/js.png" ></span>
+						熟悉JavaScript/Ajax的基本知识，能熟练书写JS原生代码，了解一些ES6新性。
+						了解常见的前端类库（Jquery，Bootstrap等），熟悉前端MV*框架（AngularJS,vueJs），了解NodeJS
+						会使用git工具进行版本控制，了解npm包管理工具。
+					</p>
+				</div>
+
+				<div class="section">
+					<h3 id='scie'><span>科研项目</span></h3>
+					<div id='rap'>
+					<h4>密集分布式MIMO下行传输理论与方法研究</h4>
+					
+					研究成果：
+					<ul>
+						<li>一种基于hedonic博弈的分布式基站分簇方法（专利已受理）</li>
+						<li>Hedonic coalition formation game for clustered interference alignment（wcsp审稿中）</li>
+					</ul>
+						
+				</div>
+	
+				</div>
+				<div class="section">
+					<h3 id='other'><span>其他</span></h3>
+					<p>
+						爱学习！爱劳动！爱游戏！
+					</p>
+				</div>
+
+			</article>
+		</div>
+		<footer>
+
+		</footer>
+	</div>
+<script>
+	bu = document.getElementById('firgame');
+	bu.onclick = function(){
+		window.open('./main.html');
+	}
+</script>
 </body>
 </html>

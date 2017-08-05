@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+		.wrapper{
+			margin: 30px auto;
+			width: 80%;
+			max-width: 800px;
+			background: #EFEDED;
+			
+		}
+		h2{
+			text-align: center;
+		}
+		p{
+			text-indent: 2em;
+			line-height: 1.5;
+		}
+		article{
+			margin: 0 auto;
+		}
+		.code{
+			background-color: #000;
+			color: #fff;
+			width: 70%;
+			margin: 10px auto;
+			
+		}
+		pre{
+			overflow: auto;
+		}
+</style>
+<body>
+	<div class="wrapper">
+		<article>
+		<h2>float深入理解</h2>
+			<h4>1. 概述</h4>
+			<p>float可以改变元素的正常文档流顺序，会使得父元素高度坍陷，随后的元素跟随。利用浮动可以实现复杂布局。</p>
+			<h4>2. 清除浮动</h4>
+			<ul>
+				<li>clear:both
+					<ul>
+						<li>后面添加一个额外的div，并设置clear：both;</li>
+						<li>父元素使用伪元素<pre class="code">
+	.clearfix:after{ 
+	    content: '';
+		display: block;						
+		clear: both;						
+		height: 0;						
+		visibility: hidden;													
+	}					    
+	.clearfix{ /*兼容 IE*/						
+		zoom: 1;						
+	}													
+						</pre></li>
+					</ul>
+				</li>
+				<li>父元素BFC(块状格式化上下文)形成封闭的容器(运用特定场景)
+				<ul>
+					<li>父元素float</li>
+					<li>父元素position:absolute/fixed</li>
+					<li>父元素overflow：hidden/scroll</li>
+					<li>父元素display：inline-block/table-cell</li>
+					<li>父元素设置width/height/zoom:1</li>
+				</ul></li>
+			</ul>
+			<h4>3. 其他</h4>
+			<p>设置浮动的元素会隐式改变其display属性为block。</p>
+		</article>
+	</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+		.wrapper{
+			margin: 30px auto;
+			width: 80%;
+			max-width: 800px;
+			background: #EFEDED;
+			
+		}
+		h2{
+			text-align: center;
+		}
+		p{
+			text-indent: 2em;
+			line-height: 1.5;
+		}
+		article{
+			margin: 0 auto;
+		}
+		.code{
+			background-color: #000;
+			color: #fff;
+			width: 40%;
+			height: 150px;
+			margin-left: 50%;
+			
+		}
+		#e1{
+			width: 70%;
+			height: 100px;
+			margin: 0 auto;
+			background-color: #ccc;
+		}
+		.inner{
+			width: 33.3%;
+			height: 60px;
+			float: left;
+			box-sizing: border-box;
+			background-color: #FFF196;
+			padding: 10px;
+			background-clip: content-box;
+			margin: 20px auto;
+		}
+		.inner2{
+			position: relative;
+			top: -50px;
+			left: 50px;
+		}
+		.clearfix::after{
+			content: '';
+			height: 0;
+			display: block;
+			clear: both;
+			visibility: hidden;
+		}
+		#e2{
+			width: 40%;
+			height: 150px;
+			float: left;
+			margin-left: 10%;
+			background-color: #ccc;
+			position: relative;
+		}
+		.e2{
+			width: 40%;
+			height: 40%;
+			position: absolute;
+			top: 20px;
+			right: 20%;
+			background-color: green;
+		}
+		#e3{
+			width: 70%;
+			height: 100px;
+			margin: 10px auto;
+			background-color: #ccc;
+		}
+		.e31{
+			width: 70%;
+			height: 80px;
+			margin: 10px 0;
+			display: inline-block;
+			background-color: yellow;
+		}
+		.e32{
+			position: absolute;
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-color: green;
+			margin: 10px 0px 0px -20px;
+		}
+		pre{
+			overflow: auto;
+		}
+</style>
+<body>
+	<div class="wrapper">
+		<article>
+		<h2>position属性深入理解</h2>
+			<h4>1. relative定位</h4>
+			<p>position:relative;相对于自身定位，定位后的元素脱离文档流，同时原位置在正常文档流中位置保留。</p>
+			<div id="e1" class="clearfix">
+				<div class="inner"></div>
+				<div class="inner inner2"></div>
+				<div class="inner"></div>
+			</div>	
+			<p>relative可以包裹设置absolute的元素；</p>
+			<p>relative可以提升层叠上下文水平，与z-index管理垂直方向视图显示。</p>
+			<h4>2. absolute定位</h4>
+			<p>设置position：absolute的元素相对于其第一个已经定位的祖先元素定位，其具有包裹性，可以形成BFC容器；同时具有破坏性，会照成父容器高度坍陷;绝对定位元素设置float属性无效,设置overflow也会失效。使用position可以实现复杂的定位效果。</p>
+			<h5>2.1 与relative配合实现简单定位效果</h5>
+			<div id="e2">
+				<div class="e2"></div>
+			</div>
+			<div class="code">
+<pre>	
+	#e2{
+		background-color: #ccc;
+		position: relative;
+	}
+	.e2{
+		position: absolute;
+		top: 20px;right: 20%;
+		background-color: green;
+	}			
+</pre>
+			</div>
+			<h5>2.2 不依赖relative实现简单定位</h5>
+			<p>当没有设置父定位元素时，absolute元素会相对于body定位（body元素是定位元素吗？）。没有设置各个方向的定位值时，absolute元素保持在原位置，通过设置margin使其定位。</p>
+			<div id="e3">
+				<div class="e31"></div>
+				<div class="e32"></div>
+			</div>
+			<h5>2.3 absolute提升层叠上下文（见z-index）</h5>
+			<h5>2.4 absolute充满容器</h5>
+			<p>在margin详解中提到过，absolute元素设置各方向定位值为0时，会默认充满整个容器，利用该特性可以实现高度自适应的容器，遮罩层等等。</p>
+		</article>
+	</div>
+</body>
+</html>

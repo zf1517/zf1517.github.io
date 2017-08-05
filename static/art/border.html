@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>深入理解border</title>
+	<style>
+		.wrapper{
+			margin: 30px auto;
+			width: 80%;
+			max-width: 800px;
+			background: #EFEDED;
+			
+		}
+		pre{
+			overflow: auto;
+		}
+		h2{
+			text-align: center;
+		}
+		p{
+			text-indent: 2em;
+			line-height: 1.5;
+		}
+		article{
+			margin: 0 auto;
+		}
+		.text{
+			font-weight: bold;
+			font-style:italic;
+			padding: 0 1px;
+		}
+		a:hover{
+			color: green;
+		}
+		.code{
+			background-color: #000;
+			color: #fff;
+			margin: 0 20%;
+			
+		}
+		#e1{
+
+			border:10px solid hsla(0,0%,100%,.5);
+		}
+		#e2{
+			border:10px solid #655;
+			outline:5px solid deeppink;	
+		}
+		#e3{
+			margin: 20px 20%;
+		border:10px solid #16EC12;
+		border-radius: 3px;
+        box-shadow: 0 0 0 10px #655,
+                    0 0 0 15px deeppink,
+                    0 2px 5px rgba(0,0,0,.6);
+		}
+		#e4{
+			border:1px solid #000;
+		}
+		#e5{
+			background: #EFEDED;
+			width: 0;
+			height: 0;
+		border-width:50px 100px;
+    	border-style:solid;
+    	border-color:red transparent green yellow;
+
+		}
+		#e6{
+			width: 100px;
+			height: 100px;
+			margin-left: 10%;
+			background-color: #000;
+			border-radius: 50%;
+			float: left;
+		}
+		#e7{
+			margin-left:calc(100px + 20%); 
+			border: 1px solid #000;
+		}
+		#e8{
+			clear: both;
+			width: 100px;
+			height: 100px;
+			margin-top: 20px;
+			margin-left: 10%;
+			background-color: #000;
+			border-radius: 50% / 100% 100% 0 0;
+			float: left;
+		}
+		#e9{
+			margin-top: 75px;
+			margin-left:calc(100px + 20%); 
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+<article>
+	<h2>深入理解border</h2>
+	<h4>1.实现半透明边框效果</h4>
+    	<p>默认情况下，background区域包含至边框外边沿，为了实现半透明边框，需要将背景切至边框内边沿。可利用<a class="text" >background-clip</a>属性实现，该属性默认为boder-box,可设为padding-box和content-box.</p>
+    	<div class="code" id="e1"><pre>
+	    border:10px solid hsla(0,0%,100%,.5);
+	    background:white;			
+	    background-clip:padding-box</pre>						
+    	</div>
+    <h4>2.多重边框</h4>	
+        <p>当只需要两层边框时，可以用outline属性来实现，优点是可以产生虚线边框，缺点是当设置boder-radius时，描边无法跟随圆角</p>
+        <div class="code" id="e2"><pre>
+        border:10px solid #655;
+        outline:5px solid deeppink;</pre>		
+        </div>
+        <p>当需要多重边框时，可使用box-shadow属性，它支持逗号分隔语法，可以创造任意数量的投影。</p>
+        <div class="code" id="e3"><pre>
+        border:10px solid #16EC12;
+        box-shadow: 0 0 0 10px #655,
+                    0 0 0 15px deeppink,
+                    0 2px 5px rgba(0,0,0,.6);
+        // h-shadow v-shadow blur spread color inset</pre>
+        </div>
+	<h4>3.boder构建三角形</h4>
+    	<p>border可为每个方向上设置颜色，当content区域为0时，border沿对角线分割</p>
+    	<div class="code" id="e4"><pre>
+    	border-width:12px 20px;
+    	border-style:solid;
+    	border-color:red transparent green yellow;</pre>
+    	</div>
+    	<p>效果图：</p>
+    	<div id="e5" class="code"></div>
+    <h4>4.border画圆</h4>
+    <p>通过设置border-radius设置每个圆角的长半径和短半径来形成椭圆和圆形。</p>
+    <div id="e6"></div>
+    <div class="code" id="e7">
+    <pre>
+    	width: 100px;
+    	height: 100px;
+    	border-radius: 50%;</pre>
+    </div>
+    <div id="e8"></div>
+    <div class="code" id="e9">
+    <pre>
+    	width: 100px;
+    	height: 100px;
+    	border-radius: 50% / 100% 100% 0 0;</pre>
+    </div>
+</article>
+	
+</div>
+
+	
+</body>
+</html>

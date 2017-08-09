@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>响应式设计</title>
+</head>
+<style>
+		.wrapper{
+			margin: 0 auto;
+			width: 96%;
+			max-width: 800px;
+			
+		}
+		h2{
+			text-align: center;
+		}
+		p{
+			text-indent: 2em;
+			line-height: 1.5;
+		}
+		article{
+			margin: 0 auto;
+		}
+		.code{
+			background-color: #000;
+			color: #fff;
+			margin: 0 10%;
+			width: 70%;
+			overflow: auto;
+		}
+</style>
+<body>
+	<div class="wrapper">
+		<article>
+		<h2>响应式Web设计</h2>
+		<h4>1. 媒体查询</h4>
+		<p>媒体查询可以理解为向浏览器提问。例如限制只有视口宽度大于800小于960像素的显示屏才能加载css文件：</p>
+		<pre class="code">
+&lt;link rel='stylesheet' media="screen amd (min-width:800px) 
+and (max-width:960px)" href='800wide-screen.css'&gt;</pre>
+		<p>还可以在CSS样式表中使用媒体查询，例如</p>
+		<pre class="code">
+
+@media screen and (max-device-width:400px){
+	h1{
+		color:green
+	}
+}
+		</pre>
+		<p>CSS中样式表后面的样式会覆盖前面相同的样式，我们可以先针对大视口设计，然后再针对小视口，使用媒体查询来重写这部分样式。</p>
+		<h4>2. 阻止移动浏览器自动调整页面大小</h4>
+		<p>IOS和Android浏览器都是基于Webkit核心。这两种浏览器和其他很多种浏览器默认将画布缩小到和视口大小匹配，这样页面内容将变得很小，需要放大页面才能看得清。可以利用meta标签来改变默认设置。</p>
+		<pre class="code">
+
+&lt;meta name="viewport" content="width=device-width,
+inital-scale=1.0,user-scalable=no"&gt;
+		</pre>
+		<h4>3. 流式布局</h4>
+		<p>如果针对特定的访问设备，可以单独的使用媒体查询来制作理想的设计效果，但是这种策略有严重的缺陷，他不能适应未来的变化。。目前的情形是，页面捕捉到媒体查询设置的断点，然后布局发生变化。但在捕捉到下一个视口断点之前，页面静止不变。目前的效果更像是一个自适应设计，而不是我们想要的真正的响应式设计。我们的设计应该在突变之前保持灵动。要做到这点，需要将呆板的固定布局修改成灵活的流动布局。</p>
+		<h5>3.1 使用百分比布局</h5>
+		<p>使用百分比布局创建流动的弹性界面，同时使用媒体查询来限制元素的变动范围。将这两者组合到一起构成了响应式设计的核心，基于此可以创造出真正完美的设计。</p>
+		<p>目标元素宽度÷上下文元素宽度=百分比宽度,由此公式将固定像素的样式改为百分比样式。</p>
+		<h5>3.2 使用em代替px</h5>
+		<p>em的实际大小是相对于其上下文的字体大小而言的,只需改变上下文的文字大小，就可以改变所有子元素的相对大小。</p>
+		<h5>3.3 弹性图片</h5>
+		<p>对于图片我们可以设置百分比宽度的同时设置最大宽度以免超过图片实际尺寸。在这种情况下，图片尺寸必须比其显示尺寸更大以保证渲染效果，否则的话图片可能看起来很糟糕。基于这个原因，图片文件的体积就永远比实际显示所需的大。基于一组屏幕尺寸断点，根据用户需要为其提供不同的图片看起来是一种不错的解决方案。</p>
+	
+		</article>
+	</div>
+</body>
+</html>

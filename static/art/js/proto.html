@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>Document</title>
+</head>
+<style>
+		.wrapper{
+			margin: 0 auto;
+			width: 100%;
+			max-width: 800px;
+			padding: 10px;
+			
+		}
+		h2{
+			text-align: center;
+		}
+		p{
+			text-indent: 2em;
+			line-height: 1.5;
+		}
+		article{
+			margin: 0 auto;
+		}
+		.code{
+			background-color: #000;
+			color: #fff;
+			margin: 0 10%;
+			
+		}
+</style>
+<body>
+	<div class="wrapper">
+		<article>
+		<h2>js对象和原型</h2>
+			<p>JavaScript是基于原型实现继承的。对于一个构造函数C(),其拥有一个prototype属性，对于由构造函数实例化得到的实例instance，其原型即为C.prototype,instance._protot_===C.prototype(非标准方法)。Object.getPrototypeOf(instance)===C.prototype. instance会继承原型上的属性，通过new C()获得构造函数上的属性，JavaScript中原型和构造函数组成了近似于类的实现。</p>
+			<p>如果只需要继承原型上的方法，而不需要获得构造函数上的属性，我们可以使用Object.creat()方法来实现,该方法近似于：</p>
+			<pre class="code">
+function create（prototype）{
+	function C(){}
+	C.prototype = prototype;
+	return new C();
+}           </pre>
+			<p>为什么要引入原型属性呢？将方法定义在构造函数上，实例一样可以获得这些方法。原因是构造函数实例化相当于每个实例都生成了不同的副本，占内存，而原型中的方法是共享的。所以将共享方法放在原型上，私有变量或属性放在构造函数中是一种好的布局</p>
+			<p>对于继承构造函数上的属性，如果通过原型链继承的方式，将父类的实例赋值给子类原型，这种方案问题是不能传参；所以较好的方案是在子类的构造函数中调用父类的构造函数。</p>
+			<p>创建一个对象实例常用的有四种方法:
+			<ul>
+				<li>工厂模式。缺点：不能识别对象的类型。
+				<pre class="code">
+function super(name,number){
+	var o = new Object();
+	o.name = name;
+	o.number = number;
+	o.say = function(){
+		alert(this.name);
+	}
+	return o;
+}			
+var sub = super('yyyy',1);		
+				</pre>
+				</li>
+				<li>构造函数(与上一种内部实现差不多)。缺点：生成相同方法，浪费内存。<pre class="code">
+function Super(name,number){
+	this.name = name;
+	this.number = number;
+	this.say = function(){
+		alert(this.name);
+	}
+}
+var sub = new Super('yyyy',1);
+				</pre>	
+				</li>
+				<li>原型模式（在原型上定义方法）</li>
+				<li>组合模式（在构造函数上写私有属性，原型上写共有方法）</li>
+			</ul></p>
+			
+		</article>
+	</div>
+</body>
+</html>

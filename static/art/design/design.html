@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>设计模式</title>
+</head>
+<style>
+		.wrapper{
+			margin: 0 auto;
+			width: 96%;
+			max-width: 800px;
+			
+		}
+		h2{
+			text-align: center;
+		}
+		p{
+			text-indent: 2em;
+			line-height: 1.5;
+		}
+		article{
+			margin: 0 auto;
+		}
+		.code{
+			background-color: #000;
+			color: #fff;
+			margin: 0 10%;
+			overflow: auto;
+			
+		}
+</style>
+<body>
+	<div class="wrapper">
+		<article>
+		<h2>设计模式</h2>
+			<h4>1. 单例模式</h4>
+			<p>单例模式的定义是：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+			<p>首先实现一个透明的单例类，使用CreateDiv单例类，在页面中创建唯一的div节点。</p>
+			<pre class="code">
+	var CreateDiv = (function(){
+		var instance;
+		var CreateDiv = function(html){
+			if(instance){
+				return instance;
+			}
+			this.html = html;
+			this.init();
+			return instance = this;
+		};
+		CreateDiv.prototype.init = function(){
+			var div = document.createElement('div');
+			div.innerHTML = this.html;
+			document.body.appendChild(div);
+		};
+		return CreateDiv;
+	})();
+	var a = new CreateDiv('sven1');
+	var b = new CreateDiv('sven2');
+	alert(a ===b)
+			</pre>
+			<p>单例构造函数中先判断是否存在一个对象，然后构造和初始化对象。将这两个职责写入一个函数不符合单一职责原则，我们可以将判断对象是否存在的功能拿出来放入一个代理类中。</p>
+			<pre class="code">
+	var proxySingletonCreateDiv = (function(){
+		var instance;
+		return function(html){
+			if (!instance){
+			instance = new CreateDiv(html);
+			}
+			return instance;
+		}
+	})();
+			</pre>
+			<p>当我们需要时才创建这个单例，而不是页面加载好就创建，这种叫做惰性单例模式。</p>
+			<p>为了让创建单例可复用，我们将逻辑抽象出来</p>
+			<pre class="code">
+	var getSingle = function(fn){
+		var result;
+		return function(){
+			return result || (result = fn.apply(this,arguments));
+		}
+	}
+			</pre>
+		<h4>2. 策略模式</h4>
+		<p>定义一系列算法，把他们一个个封装起来，并且使他们可以相互替换。将算法的使用和算法的实现分开。一个策略模式由两部分组成，第一个部分是一组策略类，封装具体的算法，第二个部分是环境类，接受客户的请求，随后将请求委托给一个策略类</p>
+		<pre class="code">
+	var strategies = {
+		'S':function(salary){
+			return salary*4;
+		},
+		'A':function(salary){
+			return salary*3;
+		},
+		'B':function(salary){
+			return salary*2;
+		}
+	};
+	var calculateBonus = function(level, salary){
+		return strategies[level](salary);
+	};
+		</pre>
+		<p>策略模式可以消除大量分支判断语句，应用：动画，表单验证等。</p>
+		<h4>3. 代理模式</h4>
+		<p>常用虚拟代理和缓存代理。虚拟代理是把一些开销很大的对象，延迟到真正需要它的时候才去创建。
+		缓存代理是将计算结果或取得的结果暂时缓存。</p>
+		<p>图片预加载实例：</p>
+		<pre class="code">
+var myImage = (function(){
+	var imgNode = document.createElement('img');
+	document.body.appendChild(imgNode);
+	var img = new Image;
+
+	img.onload = function(){
+		imgNode.src = img.src;
+	};
+	return{
+		setSrc:function(src){
+			imgNode.src = 'file:// /C:/User...';
+			img.src = src;
+		}
+	}
+})
+MyImage.setSrc('http://pic.qiantucdn.com/58pic/16/62/63/97m58PICy
+WM_1024.jpg!/fw/780/watermark/url/L3dhdGVybWF
+yay12MS4zLnBuZw==/align/center');
+		</pre>
+		<p>上述代码除了要给imgNode设置src外，还要实现预加载，不符合单一职责的的思想，如果要去掉预加载功能，需要整体改变代码，使用代理模式更佳。</p>
+		<pre class="code">
+var myImage =(function(){
+	var imgNode = document.createElement('img');
+	document.body.appendChild(imgNode);
+	return{
+		setSrc:function(src){
+			imgNode.src = src;
+		}
+	}
+});
+var proxyImage =(function(){
+	var img = new Image;
+	img.onload = function(){
+		myImage.setSrc(this.src);
+	}
+	return{
+		setSrc: function(src){
+			myImage.setSrc('file://..');
+			img.src = src;
+		}
+	}
+}) 
+		</pre>
+		<p>其他应用场景：打包一段时间内频繁的HTTP请求；缓存代理；</p>
+		<h4>4. 迭代器模式</h4>
+		<p>指提供一种方法顺序访问一个聚合对象中的各个元素，而不需要暴露该对象的内部表示。</p>
+		<p>实现一个内部迭代器：</p>
+		<pre class="code">
+var each = function(arr,callback){
+	for(var i=0; i&lt;arr.length;i++){
+		callback.call(null,i,arr[i]);
+	}	
+};
+each([1,2,3],function(i,n){
+	alert([i,n]);
+})
+		</pre>
+		<p>内部迭代器提前规定了内部的迭代规则。</p>
+		<h4>5. 发布-订阅模式(观察者模式)</h4>
+		<p>它定义对象间一种一对多的依赖关系，当一个对象状态改变时，所有依赖于它的对象都将得到通知，在js中表现为事件驱动模型。</p>
+		<p>最常见的发布-订阅模式当属DOM事件了，绑定事件的节点是订阅者，事件的触发是发布者。</p>
+		<p>发布-订阅模式的通用实现：</p>
+		<pre class="code">
+var event = {
+	clientList:[],
+	listen:function(key,fn){
+		if(!this.clientList[key]){
+			this.clientList = [];
+		}
+		this.clientList[key].push(fn);
+	},
+	trigger:function(){
+		var key = Array.prototype.shift.call(arguments);
+		var fns = this.clientList[key];
+		if(!fns||fns.length === 0){
+			return false;
+		}
+		for(var i=0,fn;fn = fns[i];i++){
+			fn.apply(this,arguments);
+		}
+	},
+	remove:function(key,fn){
+		var fns = this.clientList[key];
+		if(!fns){
+			return false;
+		}
+		if(!fn){
+			fns && (fns.length = 0);
+		}else{
+			for ( var l = fns.length - 1; l >=0; l-- ){ 
+				var _fn = fns[ l ];
+				if ( _fn === fn ){
+				fns.splice( l, 1 ); 
+				}
+			}
+		}
+	}
+}
+		</pre>
+		<p>发布-订阅模式优点十分明显，一是时间上的解耦，二是对象上的解耦；既可以用在异步编程中，又可以帮助我们完成更松耦合的代码编写。</p>
+		<p>缺点：创建需要消耗一定的时间和内存，对象之间的联系深埋难以发现，不便于调试。</p>
+		<h4>6. 命令模式</h4>
+		<p>应用场景：有时候需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是什么，此时希望以一种松耦合的方式来设计程序，使得请求发送者和接收者能够消除彼此的耦合关系。/p>
+		<p>在传统面向对象语言中，函数方法不能作为值传递，命令模式将过程式的请求调用封装在command对象的execute方法中； 而对于JavaScript，函数方法可以直接安装在请求按钮上，如果我们需要请求‘接收者’，也可以通过闭包实现。因为有可能会执行撤销命令等操作，最好式将执行函数改为调用execute（）方法。</p>
+		<pre class="code">
+var RefreshMenuBarCommand = function(receiver){
+	return{
+		execute:function(){
+			receiver.refresh();
+		}
+		undo:function(){
+			receiver.close();
+		}
+	}
+};
+var setCommand = function(button1,buuton2, command){
+	button1.onclick = function(){
+		command.execute();
+	};
+	button2.onclick = function(){
+		command.undo();
+	}
+};
+var refreshMenuBarCommand = RefreshMenuBarCommand(MenueBar);
+setCommand(button1,button2, refreshMenuBarCommand );
+		</pre>
+		<p>宏命令：将一组命令放在一个集合中，并定义添加，删除命令的方法。</p>
+		<h4>7. 组合模式</h4>
+		<p>组合模式就是用小的对象来构建更大的对象，而这些小的对象本身也许是由更小的‘孙对象’构成的。组合模式将对象组合成树形视图，通过调用父节点的execute方法，就可以执行所有子节点的execute方法；组合对象和单个对象拥有相同的接口，使用上具有一致性，但他们本质上是有区别的，组合对象可以拥有子节点，叶对象下面没有子节点，也许会发生试图往叶对象添加子节点的误操作。</p>
+		<pre class="code">
+var MacroCommand = (function(){
+	return{
+		commandList:[],
+		add:function(command){
+			this.commandList.push(command);
+			},
+		execute:function(){
+			for(var i=0,command;commannd = this.commandList[i++];){
+				command.execute();
+			}
+		}
+	}
+})();
+var openTvCommand = {
+	execute:function(){
+		console.log('open tv')
+	},
+	add:function(){
+	throw new Error('error')
+	},
+}
+macroCommand.add(openTvCommand);
+		</pre>
+		<p></p>
+		<h4>8. 模板方法模式</h4>
+		<p>模板方法模式由两部分组成，第一部分是抽象父类，第二部分是具体的实现子类。抽象父类中封装了子类的算法框架，包括一些公共方法和封装子类中所有方法的执行顺序，子类继承父类的算法框架。</p>
+		<p>java中编译器会保证子类会重写父类中的抽象方法，而javascript不会，可以通过接口检查，或在抽象方法中抛出异常的方式来确保重写。</p>
+		<p>模板方法模式常用于搭建项目的框架，程序员继承框架后往里面填空，比如一个框架中每个生命周期的顺序就适合用模板方法模式定义。</p>
+		<p>钩子方法是隔离变化的一种常用手段，我们在父类中容易变化的地方放置钩子，钩子方法的返回结果决定模板方法后面部分的执行。</p>
+		<p>在JavaScript中，子类继承父类有多种方法可以实现。</p>
+		<h4>9. 亨元模式</h4>
+		<p>享元模式是一种用于性能优化的模式。其将对象的属性分为内部状态和外部状态，内部状态独立于具体的场景，通常不会改变，可以被一些对象共享，外部状态根据场景变化，不被共享。</p>
+		<p>使用享元模式大大减少系统内的对象数，但是组装外部状态到共享对象上需要轮流来，这个过程需要花费一定时间，享元模式是一种以时间换空间的优化模式。</p>
+		<h4>10. 职责链模式</h4>
+		<p>职责链模式的定义是：使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递请求，直到有一个对象处理它为止。</p>
+		<p>场景：由订购类型orderType,是否支付pay，库存stock三个参数来确定用户可以得到哪种套餐。</p>
+		<p>最初级的方法无疑是一层层的if判断，但这种代码可维护性差；用职责链模式优化看起来是个不错的方式。</p>
+		<pre class="code">
+var order500 = function(orderType, pay, stock){
+	if(orderType === 1 && pay === true){
+		console.log('500套餐');
+	}else{
+		return 'nextSuccessor';
+	}
+};
+var order200 = function(orderType, pay, stock){
+	if(orderType === 2 && pay ===true){
+		console.log('200taocan');
+	}else{
+		return 'nextSuccessor';
+	}
+};
+var orderNormal = function(orderType, pay, stock){
+	if(stock > 0){
+		console.log('normaltaocan');
+	}else{
+		console.log('kucun not enough')
+	}
+};
+
+var Chain = function(fn){
+	this.fn = fn;
+	this.successor = null;
+}
+Chain.prototype.setNextSuccessor = function(successor){
+	return this.successor = successor;
+};
+Chain.prototype.passRequest = function(){
+	var ret = this.fn.apply(this, arguments); //看该对象能否处理该请求
+	if(ret === 'nextSucessor'){
+		return this.successor && this.successor.passRequest.apply(this.successor,arguments);      //不能则传递给该对象的下一个节点
+	}
+	return ret;
+}
+
+var chainOrder500 = new Chain(order500);
+var chainOrder200 = new Chain(order200);
+var chainOrderNormal = new Chain(orderNormal);
+
+chainOrder500.setNextSuccessor(chainOrder200);
+chainOrder200.setNextSuccessor(chainOrderNormal);
+
+chainOrder500.passRequest(1,true,500);
+		</pre>
+		<h4>11. 中介者模式</h4>
+		<p>面向对象设计鼓励将行为分布到各个对象中，把对象划分成更小的粒度，有助于增强对象的可复用性，但当这些粒度对象的联系激增时，又可能反过来降低它们的可复用性。中介者模式的作用是解除对象之间的紧密耦合关系，类似于用一个中央处理器处理对象属性变化而产生的影响。所有节点对象只跟中介者对象通信，中介者对象来处理变化。</p>
+		<h4>12. 装饰者模式</h4>
+		<p>装饰者模式可以动态的给某个对象添加一些额外的职责，这在JavaScript中十分容易实现。函数也是一种对象，在装饰函数时，最简单粗暴的方式是改写原函数，下面给出一种不改变函数源代码的情况下，给函数增加功能的方式</p>
+		<pre class="code">
+var a = function(){
+	alert(1);
+}
+var _a = a;
+a = function(){
+	_a();
+	alert(2);
+}
+a();
+		</pre>
+		<h4>13. 状态模式</h4>
+		<p>状态模式的关键是区分事物内部的状态，事物内部状态不同时往往导致不同的行为。将状态封装成独立的类，并将请求委托给当前的状态对象，当对象的内部状态改变时，会带来不同的行为变化。</p>
+		<p>状态模式的通用结构：</p>
+		<pre class="code">
+var  Light = function(){
+	this.offLightState = new OffLightState(this);
+	this.weakLightState = new WeakLightState(this);
+	this.strongLightState = new StrongLightState(this);
+	this.button = null;
+};
+Light.prototype.init = function(){
+	var  button = document.createElement('button');
+	self = this;
+	this.button = document.body.appendChild(button);
+	this.button.innerHTML ='开关'；
+	this.currState = this.offLightState;
+	this.button.onclick = function(){
+		self.currState.buttonWasPressed(); //绑定状态对象上的方法
+	}
+};
+Light.prototype.setState = function( newState ){
+	this.currState = newState;
+};
+var OffLightState = function(light){
+	this.light = light;
+}
+OffLight.prototype.buttonWasPressed = function(){
+	console.log('弱光')；
+	this.light.setState(this.weakLightState)
+}
+
+		</pre>
+		<p>策略模式和状态模式的相同点是，它们都有一个上下文、一些策略或者状态类，上下文把请
+求委托给这些类来执行.</p>
+ 		<p>策略模式中的各个策略类之间是平等又平行的，它们之间没有任何联系，所以客户必须熟知这些策略类的作用，以便客户可以随时主动切换算法；而在状态模式中，状态和状态对应的行为是早已被封装好的，状态之间的切换也早被规定完成，“改变行为”这件事情发生在状态模式内部</p>
+ 		<h4>14. 适配器模式</h4>
+ 		<p>适配器模式的作用是解决两个软件实体间的接口不兼容的问题.</p>
+ 		<p>例子：</p>
+ 		<pre class="code">
+var googleMap = {
+	show: function(){
+		console.log( '开始渲染谷歌地图' );
+	}
+};
+var baiduMap = {
+	display: function(){
+		console.log( '开始渲染百度地图' );
+	}
+};
+var baiduMapAdapter = {
+	show: function(){
+	return baiduMap.display();
+	}
+};
+renderMap( googleMap ); // 输出：开始渲染谷歌地图
+renderMap( baiduMapAdapter ); // 输出：开始渲染百度地图
+ 		</pre>
+		</article>
+	</div>
+</body>
+</html>
